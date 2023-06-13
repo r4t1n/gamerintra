@@ -16,6 +16,6 @@ python main.py
 
 ## Todo
 
-- [ ] Have the output name of wget be date and time instead of the URL
+- [X] Have the output name of wget be date and time instead of the URL
 - [ ] Save logs from wget
 - [ ] Actually read from the .ics file
