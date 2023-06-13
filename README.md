@@ -24,4 +24,5 @@ python3 main.py
 
 - [X] Have the output name of wget be date and time instead of the URL
 - [X] Save logs from wget
+- [ ] Have a config file to store settings and URLs
 - [ ] Actually read from the .ics file
