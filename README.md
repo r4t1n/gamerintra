@@ -14,6 +14,12 @@ cd gamerintra/gamerintra
 python main.py
 ```
 
+OR
+
+```sh
+python3 main.py
+```
+
 ## Todo
 
 - [X] Have the output name of wget be date and time instead of the URL
