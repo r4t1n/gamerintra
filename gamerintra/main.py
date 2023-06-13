@@ -1,10 +1,12 @@
 import subprocess
 import sys
+import time
 
 url = input("Enter full URL from SkoleIntra: ")
 username = subprocess.check_output("whoami").decode(sys.stdout.encoding).strip()
-location = "/home/" + username + "/.config/gamerintra"
+calendar_location = "/home/" + username + "/.config/gamerintra/calendar/"
 
-subprocess.run(["mkdir", location])
+subprocess.run(["mkdir", calendar_location])
 
-subprocess.run(["wget", "--quiet", "-P", location, url])
+current_time = time.strftime("%H:%M:%S", time.localtime())
+subprocess.run(["wget", "--quiet", "-O", calendar_location + current_time, url])
