@@ -2,6 +2,8 @@
 
 ## Installing
 
+I have been using Python 3.11.3 at the time of developing this.
+
 ```sh
 git clone https://github.com/r4t1n/gamerintra.git
 ```
@@ -14,15 +16,9 @@ cd gamerintra/gamerintra
 python main.py
 ```
 
-OR
+## Usage
 
-```sh
-python3 main.py
-```
+Direct link to get your feed: https://xxx.m.skoleintra.dk/student/calendar/myCalendar#sk-calendar-subscriptions-modal-container
+Replace xxx with your schools subdomain
 
-## Todo
-
-- [X] Have the output name of wget be date and time instead of the URL
-- [X] Save logs from wget
-- [ ] Have a config file to store settings and URLs
-- [ ] Actually read from the .ics file
+To manually get your feed: Home > Calendar > Subscribe to activity calendar
