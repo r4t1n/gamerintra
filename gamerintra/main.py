@@ -15,4 +15,4 @@ subprocess.run(["mkdir", "-p", calendar_location, log_location])
 subprocess.run(["cp", "../gamerintra.conf", location])
 
 current_time = time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime())
-subprocess.run(["wget", "-o", log_location + current_time, "-O", calendar_location + current_time, url])
+subprocess.run(["wget", "-o", log_location + "wget-log_" + current_time, "-O", calendar_location + "GetFeed_" + current_time + ".ics", url])
