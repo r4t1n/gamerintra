@@ -4,7 +4,7 @@ A CLI tool to interact with SkoleIntra's activity calendar
 
 ## Installing
 
-I have been using Python 3.11.3 at the time of developing this.
+I have been using Python 3.11.3 at the time of developing this
 
 ```sh
 git clone https://github.com/r4t1n/gamerintra.git
