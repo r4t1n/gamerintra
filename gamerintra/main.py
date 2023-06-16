@@ -1,18 +1,17 @@
 import subprocess
 import sys
 import os
+from os.path import expanduser
+import shutil
 import time
 
-# I could not get the tilda (~) to work so we use the username and full path instead
-username = subprocess.check_output("whoami").decode(sys.stdout.encoding).strip()
-
-location = "/home/" + username + "/.config/gamerintra/"
+location = expanduser("~") + "/.config/gamerintra/"
 calendar_location = location + "calendar/"
 log_location = location + "logs/"
 
-conf = location + "gamerintra.conf"
-feed = calendar_location + "GetFeed.ics"
-feed_new = calendar_location + "GetFeed_new.ics"
+conf = os.path.join(location, "gamerintra.conf")
+feed = os.path.join(calendar_location, "GetFeed.ics")
+feed_new = os.path.join(calendar_location, "GetFeed_new.ics")
 
 current_time = time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime())
 wget_log = log_location + "wget_log_" + current_time
@@ -22,7 +21,7 @@ subprocess.run(["mkdir", "-p", calendar_location, log_location])
 
 # If the config file does not exist we copy the default config file, prompt the user to enter their URL and then write the URL to the config file
 if not os.path.exists(conf):
-    subprocess.run(["cp", "../gamerintra.conf", location])
+    shutil.copy("../gamerintra.conf", location)
     url = input("Enter full URL from SkoleIntra: ")
 
     with open(conf, 'r') as file:
@@ -55,6 +54,6 @@ diff_process = subprocess.run(
 # Return code 1 = The files are not identical
 # Return code 2 = No such file or directory
 if diff_process.returncode == 0:
-    subprocess.run(["rm", feed_new])
+    os.remove(feed_new)
 elif diff_process.returncode == 1 or diff_process.returncode == 2:
-    subprocess.run(["mv", feed_new, feed])
+    shutil.move(feed_new, feed)
