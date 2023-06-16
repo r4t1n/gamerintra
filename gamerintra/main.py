@@ -1,8 +1,7 @@
 import subprocess
 import sys
+import os
 import time
-
-url = input("Enter full URL from SkoleIntra: ")
 
 # I could not get the tilda (~) to work so we use the username and full path instead
 username = subprocess.check_output("whoami").decode(sys.stdout.encoding).strip()
@@ -11,14 +10,36 @@ location = "/home/" + username + "/.config/gamerintra/"
 calendar_location = location + "calendar/"
 log_location = location + "logs/"
 
+conf = location + "gamerintra.conf"
 feed = calendar_location + "GetFeed.ics"
 feed_new = calendar_location + "GetFeed_new.ics"
 
 current_time = time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime())
 wget_log = log_location + "wget_log_" + current_time
 
+# We can run the mkdir command even if the directories are made since it does not override files and does not print to the terminal
 subprocess.run(["mkdir", "-p", calendar_location, log_location])
-subprocess.run(["cp", "../gamerintra.conf", location])
+
+# If the config file does not exist we copy the default config file, prompt the user to enter their URL and then write the URL to the config file
+if not os.path.exists(conf):
+    subprocess.run(["cp", "../gamerintra.conf", location])
+    url = input("Enter full URL from SkoleIntra: ")
+
+    with open(conf, 'r') as file:
+        lines = file.readlines()
+    
+    updated_lines = []
+    for line in lines:
+        if line.startswith("url = "):
+            line = f"url = {url}\n"
+        updated_lines.append(line)
+    
+    with open(conf, 'w') as file:
+        file.writelines(updated_lines)
+
+# If the config file does exist we read from the file and store the url in the url variable (maybe use open again instead of using cat and grep for this)
+url_output = subprocess.check_output("cat {} | grep 'url = '".format(conf), shell=True).decode(sys.stdout.encoding).strip()
+url = url_output.replace("url = ", "")
 
 subprocess.run(["wget", "-o", wget_log, "-O", feed_new, url])
 
