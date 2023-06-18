@@ -5,6 +5,16 @@ from pathlib import Path
 import shutil
 import re
 import time
+import colorama
+
+colorama.init()
+
+ok = "[" + colorama.Fore.GREEN + "+" + colorama.Style.RESET_ALL + "] "
+action = "[" + colorama.Fore.YELLOW + "+" + colorama.Style.RESET_ALL + "] "
+warning = "[" + colorama.Fore.RED + "!" + colorama.Style.RESET_ALL + "] "
+
+green = colorama.Fore.GREEN
+style_reset = colorama.Style.RESET_ALL
 
 location = Path(expanduser("~")) / ".config" / "gamerintra"
 calendar_location = location / "calendar"
@@ -29,23 +39,23 @@ with open(conf, 'r') as file:
             existing_url = line.strip().split("= ")[1]
             if re.match(skoleintra_url_pattern, existing_url):
                 url = existing_url
-                print("Found existing URL in config file that matches the pattern")
+                print(ok + "Found existing URL in config file that matches the pattern")
                 break
 
 if not url:
     while url is None:
-        user_input = input("Enter full URL from SkoleIntra: ")
+        user_input = input(action + "Enter full URL from SkoleIntra: ")
         if re.match(skoleintra_url_pattern, user_input):
             url = user_input
-            print("URL matches the pattern")
+            print(ok + "URL matches the pattern")
         else:
-            print("URL does not match the pattern")
+            print(warning + "URL does not match the pattern")
 
     with open(conf, 'w') as file:
-        print("Writing URL to the config file")
+        print(ok + "Writing URL to the config file")
         file.write(f"url = {url}\n")
 
-print("Downloading feed from SkoleIntra")
+print(ok + "Downloading feed from SkoleIntra")
 subprocess.run(["wget", "-o", wget_log, "-O", feed_new, url])
 
 # "--ignore-matching-lines=^DTSTAMP:................" is needed to ignore the timestamp of downloading since this changes every time you download the file
@@ -59,8 +69,8 @@ diff_process = subprocess.run(
 # Return code 1 = The files are not identical
 # Return code 2 = No such file or directory
 if diff_process.returncode == 0:
-    print("New feed is identical to old feed, deleting new feed")
+    print(ok + "New feed is identical to old feed, deleting new feed")
     os.remove(feed_new)
 elif diff_process.returncode == 1 or diff_process.returncode == 2:
-    print("New feed is not identical to old feed, moving new feed to old feed")
+    print(ok + "New feed is not identical to old feed, moving new feed to old feed")
     shutil.move(feed_new, feed)
