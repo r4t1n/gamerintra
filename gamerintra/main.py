@@ -16,6 +16,7 @@ subprocess.run(["mkdir", "-p", calendar_location, log_location])
 
 if not os.path.exists(conf):
     conf_source = os.path.join(script_location, "../gamerintra.conf")
+    print("Config file not found, copying " + str(conf_source) + " to " + str(conf))
     shutil.copy(conf_source, conf)
 
 subprocess.run(["python", os.path.join(script_location, "getfeed.py")])
