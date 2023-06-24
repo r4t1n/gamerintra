@@ -1,3 +1,5 @@
+#!/bin/python3
+
 import subprocess
 import os
 from os.path import expanduser
@@ -9,9 +11,8 @@ import colorama
 
 colorama.init()
 
-ok = "[" + colorama.Fore.GREEN + "+" + colorama.Style.RESET_ALL + "] "
-action = "[" + colorama.Fore.YELLOW + "+" + colorama.Style.RESET_ALL + "] "
-warning = "[" + colorama.Fore.RED + "!" + colorama.Style.RESET_ALL + "] "
+ok = " [" + colorama.Fore.GREEN + "+" + colorama.Style.RESET_ALL + "] "
+warning = colorama.Fore.YELLOW + " [" + colorama.Fore.RED + "!" + colorama.Fore.YELLOW + "] " + colorama.Style.RESET_ALL
 
 green = colorama.Fore.GREEN
 style_reset = colorama.Style.RESET_ALL
@@ -44,7 +45,7 @@ with open(conf, 'r') as file:
 
 if not url:
     while url is None:
-        user_input = input(action + "Enter full URL from SkoleIntra: ")
+        user_input = input(ok + "Enter full URL from SkoleIntra: ")
         if re.match(skoleintra_url_pattern, user_input):
             url = user_input
             print(ok + "URL matches the pattern")

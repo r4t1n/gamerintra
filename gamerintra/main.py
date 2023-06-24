@@ -1,3 +1,5 @@
+#!/bin/python3
+
 import subprocess
 import os
 from os.path import expanduser
@@ -7,9 +9,8 @@ import colorama
 
 colorama.init()
 
-ok = "[" + colorama.Fore.GREEN + "+" + colorama.Style.RESET_ALL + "] "
-action = "[" + colorama.Fore.YELLOW + "+" + colorama.Style.RESET_ALL + "] "
-warning = "[" + colorama.Fore.RED + "!" + colorama.Style.RESET_ALL + "] "
+ok = " [" + colorama.Fore.GREEN + "+" + colorama.Style.RESET_ALL + "] "
+warning = colorama.Fore.YELLOW + " [" + colorama.Fore.RED + "!" + colorama.Fore.YELLOW + "] " + colorama.Style.RESET_ALL
 
 green = colorama.Fore.GREEN
 style_reset = colorama.Style.RESET_ALL
@@ -29,4 +30,4 @@ if not os.path.exists(conf):
     print(warning + "Config file not found, copying " + green + str(conf_source) + style_reset + " to " + green + str(conf) + style_reset)
     shutil.copy(conf_source, conf)
 
-subprocess.run(["python", os.path.join(script_location, "getfeed.py")])
+subprocess.run(["python3", os.path.join(script_location, "getfeed.py")])
