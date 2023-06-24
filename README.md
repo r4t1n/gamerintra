@@ -15,7 +15,7 @@ cd gamerintra/gamerintra
 ```
 
 ```sh
-python main.py
+python3 main.py
 ```
 
 ## Usage
