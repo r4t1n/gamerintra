@@ -1,5 +1,3 @@
-#!/bin/python3
-
 import subprocess
 import os
 from os.path import expanduser
@@ -40,7 +38,7 @@ with open(conf, 'r') as file:
             existing_url = line.strip().split("= ")[1]
             if re.match(skoleintra_url_pattern, existing_url):
                 url = existing_url
-                print(ok + "Found existing URL in config file that matches the pattern")
+                print(ok + "Found existing URL in the config file that matches the pattern")
                 break
 
 if not url:

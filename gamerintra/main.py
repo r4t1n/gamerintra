@@ -1,5 +1,3 @@
-#!/bin/python3
-
 import subprocess
 import os
 from os.path import expanduser
@@ -26,7 +24,7 @@ conf = location / "gamerintra.conf"
 subprocess.run(["mkdir", "-p", calendar_location, log_location])
 
 if not os.path.exists(conf):
-    conf_source = os.path.join(script_location, "gamerintra.conf")
+    conf_source = os.path.join(script_location, "../", "gamerintra.conf")
     print(warning + "Config file not found, copying " + green + str(conf_source) + style_reset + " to " + green + str(conf) + style_reset)
     shutil.copy(conf_source, conf)
 
