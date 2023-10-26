@@ -11,12 +11,13 @@ log_path = os.path.join(path, "logs")
 
 config = os.path.join(path, "gamerintra.conf")
 feed = os.path.join(calendar_path, "GetFeed.ics")
-feed_new = os.path.join(calendar_path, "GetFeed-new.ics")
 
 if not os.path.exists(calendar_path): # Needs optimizing
     os.mkdir(calendar_path)
 if not os.path.exists(log_path):
     os.mkdir(log_path)
+if not os.path.exists(config):
+    os.mknod(config)
 
 current_time = time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime())
 wget_log = os.path.join(log_path, "wget-log-" + current_time)
@@ -46,3 +47,7 @@ if not url:
     with open(config, "w") as file:
         print("Writing URL to the config file")
         file.write(f"url = {url}\n")
+
+print("Downloading feed from SkoleIntra")
+os.system(f"wget -o {wget_log} -O {feed} '{url}'")
+
