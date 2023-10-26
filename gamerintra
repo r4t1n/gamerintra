@@ -1,0 +1,48 @@
+#! /bin/python3
+
+import os
+import time
+import re
+
+path = os.path.abspath(os.path.dirname(__file__))
+
+calendar_path = os.path.join(path, "calendar")
+log_path = os.path.join(path, "logs")
+
+config = os.path.join(path, "gamerintra.conf")
+feed = os.path.join(calendar_path, "GetFeed.ics")
+feed_new = os.path.join(calendar_path, "GetFeed-new.ics")
+
+if not os.path.exists(calendar_path): # Needs optimizing
+    os.mkdir(calendar_path)
+if not os.path.exists(log_path):
+    os.mkdir(log_path)
+
+current_time = time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime())
+wget_log = os.path.join(log_path, "wget-log-" + current_time)
+
+skoleintra_url_pattern = r"https://.*?\.m\.skoleintra\.dk/feed/GetFeed\?type=Calendar&unifiedId=[0-9]{5}&culture=[a-z]{2}-[A-Z]{2}&hash=[0-9a-z]{32}"
+url = None
+
+with open(config, "r") as file:
+    lines = file.readlines()
+
+    for line in lines:
+        if line.startswith("url = "):
+            existing_url = line.strip().split("= ")[1]
+            if re.match(skoleintra_url_pattern, existing_url):
+                url = existing_url
+                break
+
+if not url:
+    while url is None:
+        user_input = input("Enter full URL from SkoleIntra: ")
+        if re.match(skoleintra_url_pattern, user_input):
+            url = user_input
+            print("URL matches the pattern")
+        else:
+            print("URL does not match the pattern")
+
+    with open(config, "w") as file:
+        print("Writing URL to the config file")
+        file.write(f"url = {url}\n")
