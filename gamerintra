@@ -1,8 +1,8 @@
-#! /bin/python3
+#! /usr/bin/env python3
 
 import os
-import time
 import re
+import time
 
 path = os.path.abspath(os.path.dirname(__file__))
 
@@ -12,7 +12,7 @@ log_path = os.path.join(path, "logs")
 config = os.path.join(path, "gamerintra.conf")
 feed = os.path.join(calendar_path, "GetFeed.ics")
 
-if not os.path.exists(calendar_path): # Needs optimizing
+if not os.path.exists(calendar_path):
     os.mkdir(calendar_path)
 if not os.path.exists(log_path):
     os.mkdir(log_path)
@@ -50,4 +50,3 @@ if not url:
 
 print("Downloading feed from SkoleIntra")
 os.system(f"wget -o {wget_log} -O {feed} '{url}'")
-
